@@ -21,4 +21,13 @@ export class Client {
   public on(actionType: ActionType, callback: (action: Action) => void) {
     this.events.set(actionType, callback);
   }
+
+  private emit(actionType: ActionType, action: Action) {
+    const cb = this.events.get(actionType);
+    if (cb) cb(action);
+  }
+
+  public connect() {
+
+  }
 }
