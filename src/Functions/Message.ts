@@ -8,7 +8,7 @@ export class Message {
     private emit: (type: ActionType, action: Action) => void
   ) {}
 
-  public async sendMessage(accessPoint: string, message: string) {
+  public async sendMessage(accessPoint: number, message: string) {
     const res = await fetch(`${this.BASE_URL}/channels/${accessPoint}/messages`, {
       method: 'POST',
       headers: {
@@ -18,7 +18,11 @@ export class Message {
       body: JSON.stringify({ content: message }),
     });
 
-    if (!res.ok) throw new Error("Failed to send message");
+    if (!res.ok) {
+      console.log("status:", res.status);
+      console.log("body:", await res.text());
+      throw new Error("Failed to send message");
+    }
 
     const action: messagesendAction = {
       content: message,
@@ -29,7 +33,7 @@ export class Message {
     this.emit("messagesent", action);
   }
 
-  public async getMessage(accessPoint: string, messageid: string) {
+  public async getMessage(accessPoint: number, messageid: number) {
     const res = await fetch(`${this.BASE_URL}/channels/${accessPoint}/messages/${messageid}`, {
       headers: { 'Authorization': `${this.token}` },
     });
@@ -48,7 +52,7 @@ export class Message {
     return data;
   }
 
-  public async deleteMessage(accessPoint: string, messageid: string) {
+  public async deleteMessage(accessPoint: number, messageid: number) {
     const res = await fetch(`${this.BASE_URL}/channels/${accessPoint}/messages/${messageid}`, {
       headers: { 'Authorization': `${this.token}` },
       method: 'DELETE',

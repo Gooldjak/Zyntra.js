@@ -9,16 +9,16 @@ export interface readyAction extends Action {
 
 export interface messagesendAction extends Action {
   content: string;
-  accessPoint: string;
+  accessPoint: number;
   user: User;
 }
 
 export interface messagedeleteAction extends Action { 
-  accessPoint: string;
-  messageid: string;
+  accessPoint: number;
+  messageid: number;
 }
 
 export interface messagegetAction extends Action {
-  accessPoint: string;
-  messageid: string;
+  accessPoint: number;
+  messageid: number;
 }

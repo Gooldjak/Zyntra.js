@@ -46,6 +46,8 @@ export class Client {
     this.username = data.username;
 
     return { username: data.username };
+
+    console.log(`Connected as ${data.username} (${this.id})`);
   }
 
   public sendMessage(...args: Parameters<Message["sendMessage"]>) {
