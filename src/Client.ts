@@ -1,6 +1,6 @@
 import { Action, ActionType, readyAction, messagesendAction, messagedeleteAction, messagegetAction } from "./Actions/Action";
 import { Message } from './Functions/Message';
-import { Socket } from "socket.io";
+import { io, Socket } from "socket.io-client";
 
 export class Client {
   private token: string;
@@ -8,10 +8,17 @@ export class Client {
   private username: string = "";
   private events = new Map<ActionType, (action: Action) => void>();
   private BASE_URL: string = "https://zyntra.gg/api/v1";
-
+  private socket: Socket;
   private messageHandler: Message;
 
   constructor(token: string, id: number) {
+
+    this.socket = io("https://zyntra.gg", {
+      path: "/ws/",
+      transports: ['websocket'],
+      extraHeaders: { 'User-Agent': 'ZyntraBot/1.0' }
+    });
+
     if (!token || typeof token !== 'string') {
       throw new Error("Token is required and must be a string.");
     }
@@ -23,7 +30,7 @@ export class Client {
     this.token = token;
     this.id = id;
 
-    this.messageHandler = new Message(this.BASE_URL, this.token, this.id, this.emit.bind(this));
+    this.messageHandler = new Message(this.BASE_URL, this.token, this.id, this.emit.bind(this), this.socket);
   }
 
   public on(actionType: ActionType, callback: (action: Action) => void) {
@@ -36,6 +43,18 @@ export class Client {
   }
 
   public async connect() {
+    this.socket.emit('join', {
+        token: this.token,
+    });
+    
+    this.socket.on('welcome', msg => {
+        console.log('Joined:', msg);
+    });
+
+    this.socket.on('connect_error', (err) => {
+      console.error('Socket connection error:', err);
+    });
+
     const res = await fetch(`${this.BASE_URL}/users/@me`, {
       method: 'GET',
       headers: { 'Authorization': this.token }
@@ -47,8 +66,6 @@ export class Client {
     this.username = data.username;
 
     return { username: data.username };
-
-    console.log(`Connected as ${data.username} (${this.id})`);
   }
 
   public sendMessage(...args: Parameters<Message["sendMessage"]>) {
@@ -61,5 +78,13 @@ export class Client {
 
   public deleteMessage(...args: Parameters<Message["deleteMessage"]>) {
     return this.messageHandler.deleteMessage(...args);
+  }
+
+  public getMessages() {
+    return this.messageHandler.getMessages();
+  }
+
+  public sendMessageEmbed(...args: Parameters<Message["sendMessageEmbed"]>) {
+    return this.messageHandler.sendMessageEmbed(...args);
   }
 }

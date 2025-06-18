@@ -1,11 +1,13 @@
-import { Action, ActionType, messagesendAction, messagegetAction, messagedeleteAction } from "../Actions/Action";
+import { Action, ActionType, messagesendAction, messagegetAction, messagedeleteAction, getMessagesAction, messagesendembedAction } from "../Actions/Action";
+import { io, Socket } from "socket.io-client";
 
 export class Message {
   constructor(
     private BASE_URL: string,
     private token: string,
     private id: number,
-    private emit: (type: ActionType, action: Action) => void
+    private emit: (type: ActionType, action: Action) => void,
+    private socket: Socket,
   ) {}
 
   public async sendMessage(accessPoint: number, message: string) {
@@ -31,6 +33,33 @@ export class Message {
     };
 
     this.emit("messagesent", action);
+  }
+
+  public async sendMessageEmbed(accessPoint: number, message: string, title: string, description: string, color: string) { 
+    const res = await fetch(`${this.BASE_URL}/channels/${accessPoint}/messages`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `${this.token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ content: message, embed: {title: title, description: description, color: color}}),
+    });
+
+    if (!res.ok) {
+      console.log("status:", res.status);
+      console.log("body:", await res.text());
+      throw new Error("Failed to send message");
+    }
+
+    const action: messagesendembedAction = {
+      accessPoint,
+      title: title,
+      description: description,
+      color: color,
+      user: { id: this.id, token: this.token },
+    };
+
+    this.emit("messagesentembed", action);
   }
 
   public async getMessage(accessPoint: number, messageid: number) {
@@ -70,5 +99,17 @@ export class Message {
     };
 
     this.emit("messagedelete", action);
+  }
+
+  public async getMessages() {
+    this.socket.on('messageReceived', msg => {
+        console.log('Message:', msg);
+    });
+
+    const action: getMessagesAction = {
+      
+    };
+
+    this.emit("messagesget", action);
   }
 }

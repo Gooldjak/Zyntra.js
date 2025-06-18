@@ -1,5 +1,5 @@
 import { User } from './Client';
-export type ActionType = "ready" | "messagesent" | "messagedelete" | "messageget";
+export type ActionType = "ready" | "messagesent" | "messagedelete" | "messageget" | "messagesget" | "messagesentembed";
 
 export interface Action {}
 
@@ -21,4 +21,16 @@ export interface messagedeleteAction extends Action {
 export interface messagegetAction extends Action {
   accessPoint: number;
   messageid: number;
+}
+
+export interface getMessagesAction extends Action {
+  
+}
+
+export interface messagesendembedAction extends Action { 
+  accessPoint: number;
+  title: string;
+  description: string;
+  color: string;
+  user: User;
 }
