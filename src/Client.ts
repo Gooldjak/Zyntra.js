@@ -1,5 +1,6 @@
 import { Action, ActionType, readyAction, messagesendAction, messagedeleteAction, messagegetAction } from "./Actions/Action";
 import { Message } from './Functions/Message';
+import { Socket } from "socket.io";
 
 export class Client {
   private token: string;
