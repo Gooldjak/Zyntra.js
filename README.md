@@ -46,21 +46,22 @@ client.deleteMessage(channelId, messageId);
 
 (async () => {
     client.connect(); // Start bot
+    client.getMessages();
 })();
 ```
 
 ## 🧠 Supported Events
 You can listen to the following events using client.on():
 
-messageCreate – a new message was sent
+messageCreate – triggered when bot sends a message
 
-messageEmbed – an embed was sent
+messageEmbed – triggered when bot sends an embed
 
-messageDelete – a message was deleted
+messageDelete – triggered when bot deletes a message
 
-messageFetch – a message was fetched
+messageFetch – triggered when bot fetches a message
 
-messageBulk – multiple messages from WebSocket
+messageBulk – triggered when bot receives multiple messages.
 
 ## 💬 Sending a Message
 ```js
