@@ -1,4 +1,4 @@
-import { Action, ActionType, messagesendAction, messagegetAction, messagedeleteAction, getmessagesAction, messagesendembedAction } from "../Actions/Action";
+import { Action, ActionType, MessageCreateAction, MessageDeleteAction, MessageBulkAction, MessageEmbedAction, MessageFetchAction } from "../Actions/Action";
 import { io, Socket } from "socket.io-client";
 
 export class Message {
@@ -26,13 +26,13 @@ export class Message {
       throw new Error("Failed to send message");
     }
 
-    const action: messagesendAction = {
+    const action: MessageCreateAction = {
       content: message,
       accessPoint,
       user: { id: this.id, token: this.token }
     };
 
-    this.emit("messagesent", action);
+    this.emit("messageCreate", action); 
   }
 
   public async sendMessageEmbed(accessPoint: number, message: string, title: string, description: string, color: string) { 
@@ -51,14 +51,14 @@ export class Message {
       throw new Error("Failed to send message");
     }
 
-    const action: messagesendembedAction = {
+    const action: MessageEmbedAction = {
       accessPoint,
       title: title,
       description: description,
       color: color,
     };
 
-    this.emit("messagesentembed", action);
+    this.emit("messageEmbed", action);  
   }
 
   public async getMessage(accessPoint: number, messageid: number) {
@@ -70,12 +70,12 @@ export class Message {
 
     const data = await res.json();
 
-    const action: messagegetAction = {
-      accessPoint,
-      messageid,
+    const action: MessageFetchAction = {
+      accessPoint: accessPoint,
+      messageId: messageid,
     };
 
-    this.emit("messageget", action);
+    this.emit("messageFetch", action);  
 
     return data;
   }
@@ -92,27 +92,27 @@ export class Message {
       throw new Error("Failed to delete message");
     }
 
-    const action: messagedeleteAction = {
+    const action: MessageDeleteAction = {
       accessPoint,
-      messageid,
+      messageId: messageid,
     };
 
-    this.emit("messagedelete", action);
+    this.emit("messageDelete", action);
   }
 
   public async getMessages() {
     this.socket.on('messageReceived', msg => {
       console.log('Message:', msg);
 
-      const action: getmessagesAction = {
+      const action: MessageBulkAction = {
         from: msg.from,
-        acccessPoint: msg.channel,
-        orgin: msg.orgin,
+        accessPoint: msg.channel,
+        origin: msg.orgin,
         message: msg.message,
         messageId: msg.messageId,
       };
 
-      this.emit("messagesget", action);
+      this.emit("messageBulk", action);   
     });
   }
 }

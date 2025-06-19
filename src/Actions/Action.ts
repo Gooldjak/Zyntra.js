@@ -1,5 +1,12 @@
 import { User } from './Client';
-export type ActionType = "ready" | "messagesent" | "messagedelete" | "messageget" | "messagesget" | "messagesentembed";
+export type ActionType =
+  | "ready"
+  | "messageCreate"
+  | "messageDelete"
+  | "messageFetch"
+  | "messageBulk"
+  | "messageEmbed";
+
 
 export interface Action {}
 
@@ -7,31 +14,31 @@ export interface readyAction extends Action {
   // to do
 }
 
-export interface messagesendAction extends Action {
+export interface MessageCreateAction extends Action {
   content: string;
   accessPoint: number;
   user: User;
 }
 
-export interface messagedeleteAction extends Action { 
+export interface MessageDeleteAction extends Action {
   accessPoint: number;
-  messageid: number;
+  messageId: number;
 }
 
-export interface messagegetAction extends Action {
+export interface MessageFetchAction extends Action {
   accessPoint: number;
-  messageid: number;
+  messageId: number;
 }
 
-export interface getmessagesAction extends Action {
+export interface MessageBulkAction extends Action {
   from: number;
-  acccessPoint: number;
-  orgin: number
+  accessPoint: number;
+  origin: number;
   message: string;
   messageId: number;
 }
 
-export interface messagesendembedAction extends Action { 
+export interface MessageEmbedAction extends Action {
   accessPoint: number;
   title: string;
   description: string;

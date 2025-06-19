@@ -1,4 +1,4 @@
-import { Action, ActionType, readyAction, messagesendAction, messagedeleteAction, messagegetAction } from "./Actions/Action";
+import { Action, ActionType, readyAction, MessageCreateAction, MessageDeleteAction, MessageFetchAction } from "./Actions/Action";
 import { Message } from './Functions/Message';
 import { io, Socket } from "socket.io-client";
 
