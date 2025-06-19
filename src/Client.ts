@@ -32,7 +32,6 @@ export class Client {
 
     this.messageHandler = new Message(this.BASE_URL, this.token, this.id, this.emit.bind(this), this.socket);
   }
-
   public on(actionType: ActionType, callback: (action: Action) => void) {
     this.events.set(actionType, callback);
   }

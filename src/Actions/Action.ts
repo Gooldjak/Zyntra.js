@@ -32,5 +32,4 @@ export interface messagesendembedAction extends Action {
   title: string;
   description: string;
   color: string;
-  user: User;
 }

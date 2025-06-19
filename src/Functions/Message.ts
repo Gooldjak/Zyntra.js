@@ -56,7 +56,6 @@ export class Message {
       title: title,
       description: description,
       color: color,
-      user: { id: this.id, token: this.token },
     };
 
     this.emit("messagesentembed", action);
