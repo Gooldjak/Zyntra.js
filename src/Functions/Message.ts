@@ -1,4 +1,4 @@
-import { Action, ActionType, messagesendAction, messagegetAction, messagedeleteAction, getMessagesAction, messagesendembedAction } from "../Actions/Action";
+import { Action, ActionType, messagesendAction, messagegetAction, messagedeleteAction, getmessagesAction, messagesendembedAction } from "../Actions/Action";
 import { io, Socket } from "socket.io-client";
 
 export class Message {
@@ -102,13 +102,13 @@ export class Message {
 
   public async getMessages() {
     this.socket.on('messageReceived', msg => {
-        console.log('Message:', msg);
+      console.log('Message:', msg);
+
+      const action: getmessagesAction = {
+        
+      };
+
+      this.emit("messagesget", action);
     });
-
-    const action: getMessagesAction = {
-      
-    };
-
-    this.emit("messagesget", action);
   }
 }

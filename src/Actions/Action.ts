@@ -23,7 +23,7 @@ export interface messagegetAction extends Action {
   messageid: number;
 }
 
-export interface getMessagesAction extends Action {
+export interface getmessagesAction extends Action {
   
 }
 
