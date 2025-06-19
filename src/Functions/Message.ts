@@ -105,7 +105,11 @@ export class Message {
       console.log('Message:', msg);
 
       const action: getmessagesAction = {
-        
+        from: msg.from,
+        acccessPoint: msg.channel,
+        orgin: msg.orgin,
+        message: msg.message,
+        messageId: msg.messageId,
       };
 
       this.emit("messagesget", action);

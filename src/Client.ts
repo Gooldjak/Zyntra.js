@@ -86,4 +86,15 @@ export class Client {
   public sendMessageEmbed(...args: Parameters<Message["sendMessageEmbed"]>) {
     return this.messageHandler.sendMessageEmbed(...args);
   }
+
+  public async setStatus(status: number) { 
+    const data = { status };
+    const response = await fetch('${this.BASE_URL}/updatePresence', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `${this.token}` },
+        body: JSON.stringify(data),
+    });
+
+    // status 0: offline, 1: online, 2: away, 3: do not disturb
+  }
 }

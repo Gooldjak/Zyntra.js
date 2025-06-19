@@ -24,7 +24,11 @@ export interface messagegetAction extends Action {
 }
 
 export interface getmessagesAction extends Action {
-  
+  from: number;
+  acccessPoint: number;
+  orgin: number
+  message: string;
+  messageId: number;
 }
 
 export interface messagesendembedAction extends Action { 
