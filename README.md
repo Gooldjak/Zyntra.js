@@ -1,6 +1,6 @@
 # Zyntra.js
 
-Official library for the **Zyntra** platform. It allows to build bots for the Zyntra platform.
+## Official library for building bots for https://zyntra.gg/
 
 ## 📦 Installation
 
