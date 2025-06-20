@@ -35,14 +35,14 @@ export class Message {
     this.emit("messageCreate", action); 
   }
 
-  public async sendMessageEmbed(accessPoint: number, message: string, title: string, description: string, color: string) { 
+  public async sendMessageEmbed(accessPoint: number, message: string, title: string, description: string, color: string, image: string, footer: string) { 
     const res = await fetch(`${this.BASE_URL}/channels/${accessPoint}/messages`, {
       method: 'POST',
       headers: {
         'Authorization': `${this.token}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ content: message, embed: {title: title, description: description, color: color}}),
+      body: JSON.stringify({ content: message, embed: {title: title, description: description, color: color, image: image, footer: footer } }),
     });
 
     if (!res.ok) {

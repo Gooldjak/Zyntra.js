@@ -1,6 +1,6 @@
 {
   "name": "zyntra.js",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Official library for building bots for https://zyntra.gg/",
   "main": "dist/Client.js",
   "scripts": {
