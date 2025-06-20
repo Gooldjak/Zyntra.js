@@ -1,0 +1,8 @@
+index.js
+src/
+tsconfig.json
+*.ts
+*.tsx
+*.test.*
+*.spec.*
+node_modules/

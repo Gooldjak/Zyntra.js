@@ -1,14 +1,14 @@
 {
-  "name": "zyntra-js",
+  "name": "zyntra.js",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Official library for building bots for https://zyntra.gg/",
+  "main": "dist/Client.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": ["zyntra", "bot", "library"],
   "author": "",
-  "license": "ISC",
-  "description": "",
+  "license": "Apache-2.0",
   "devDependencies": {
     "@types/node": "^24.0.1",
     "ts-node": "^10.9.2",
