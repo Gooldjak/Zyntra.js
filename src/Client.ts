@@ -54,6 +54,12 @@ export class Client {
       console.error('Socket connection error:', err);
     });
 
+    const action: readyAction = {
+      id: this.id,
+    };
+
+    this.emit("ready", action);
+
     const res = await fetch(`${this.BASE_URL}/users/@me`, {
       method: 'GET',
       headers: { 'Authorization': this.token }

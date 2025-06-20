@@ -11,7 +11,7 @@ export type ActionType =
 export interface Action {}
 
 export interface readyAction extends Action {
-  // to do
+  id: number;
 }
 
 export interface MessageCreateAction extends Action {
